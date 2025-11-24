@@ -655,6 +655,3 @@ function playDing() {
   oscillator.start();
   oscillator.stop(audioCtx.currentTime + 0.1);
 }
-
-
-
