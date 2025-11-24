@@ -1,87 +1,110 @@
-#videos {
-  /* ADDED container grid styles */
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 10px !important;
-  justify-items: center !important;
+/* Panels with glass effect & depth */
+#loginPanel, #callPanel, .panel {
+  background: rgba(24,24,28,0.85);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-#videos > div {
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
+
+/* Video cards dynamic hover */
+.vidCard {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 0;
+  padding-bottom: 56.25%;
+  background: #000;
+  display: flex;
   align-items: center;
-  margin: 10px;
+  justify-content: center;
+  transform-origin: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.vidCard:hover {
+  transform: scale(1.05) translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.5);
 }
 
-#videos > div > video {
-  width: 500px !important;    /* updated from 300px */
-  height: 400px !important;   /* updated from 200px */
-  border-radius: 8px !important;
-  object-fit: cover !important;
-  background-color: transparent;
-  position: relative;
-}
 
-/* Camera off effect with text inside video background */
-#videos > div.camera-off > video {
-  background-color: black !important;
-  color: white !important;
-  position: relative;
-}
-
-#videos > div.camera-off > video::after {
-  content: "Camera Off";
+/* Label fade and icon spacing */
+.label {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  pointer-events: none;
-  user-select: none;
-  width: 100%;
-  text-align: center;
-  line-height: 400px; /* updated to new height */
-  background: transparent;
-  z-index: 1;
+  left: 8px; bottom: 8px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+.label span { display:flex; align-items:center; gap:4px; }
+
+
+/* Camera off overlay fade */
+.cameraOffOverlay {
+  position: absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(0,0,0,0.65);
+  color:#f0f0f0; font-size:14px; font-weight:700;
+  z-index:3; text-align:center; padding:12px;
+  opacity:0;
+  animation: fadeIn 0.3s forwards;
+}
+@keyframes fadeIn { to { opacity:1; } }
+@keyframes fadeOut { to { opacity:0; } }
+
+
+/* Toolbar dynamic buttons */
+.tool {
+  background: linear-gradient(90deg,#0b84ff,#0a6fd1);
+  color:#fff;
+  padding:8px 12px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.25s;
+}
+.tool:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+  background: linear-gradient(90deg,#0a6fd1,#0b84ff);
 }
 
-#videos > div > div[id^="label-"] {
-  margin-top: 6px !important;
-  background: #333 !important;
-  padding: 4px 10px !important;
-  border-radius: 5px !important;
-  font-size: 14px !important;
-  color: white !important;
-  display: flex !important;
-  align-items: center !important;
+
+/* Chat panel sliding */
+#chatBox {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateY(0);
+  opacity:1;
+}
+#chatBox.hidden { transform: translateY(20px); opacity:0; }
+
+
+/* Toast slide-in/out */
+#toast {
+  transform: translateY(40px);
+  opacity:0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+#toast.show {
+  transform: translateY(0);
+  opacity:1;
 }
 
-/* Mic mute icon */
-#videos > div > div[id^="label-"] > span[id^="mic-"] {
-  margin-left: 6px !important;
-  color: #ff5252 !important;
-  user-select: none;
-}
 
-/* Chat notification dot moved outside button */
-#chatToggleBtn {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
+/* Participants animation */
+.participantRow {
+  transition: transform 0.25s, opacity 0.25s;
 }
+.participantRow.added { transform: scale(1.05); opacity:0; animation: popIn 0.3s forwards; }
+@keyframes popIn { to { transform: scale(1); opacity:1; } }
 
-#chatNotificationDot {
-  width: 12px !important;
-  height: 12px !important;
-  background-color: #0b3d91 !important; /* Darker blue */
-  border-radius: 50% !important;
-  display: none !important;
-  pointer-events: none !important;
-  user-select: none !important;
-  margin-left: 8px !important;
-  vertical-align: middle !important;
-  display: inline-block !important;
-}
+
